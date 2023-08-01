@@ -1,7 +1,6 @@
 {
 	"name": "cs128",
-	//"image": "michaelrnowak/cpp-dev-container:latest",
-  "image": "cs128dev",
+	"image": "michaelrnowak/cpp-dev-container:latest",
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash"
 	},

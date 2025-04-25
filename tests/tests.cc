@@ -46,11 +46,7 @@ bool CompareFiles(const std::string& file_1, const std::string& file_2) {
     }
   }
 
-  if (f1.good() || f2.good()) {
-    return false;
-  }
-
-  return true;
+  return !(f1.good() || f2.good());
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +59,7 @@ TEST_CASE("Black and White Image Height and Width", "[Height and Width]") {
   REQUIRE(rle.GetWidth() == 10);
 }
 
-TEST_CASE("All Images Height and Width", "[Height and Width All]") {
+TEST_CASE("All Images Height and Width", "[Height and Width]") {
   RLEImagePPM rle_1("images/BlackWhiteAlternating10X5.ppm");
   RLEImagePPM rle_2("images/AlternatingColors35x25.ppm");
   RLEImagePPM rle_3("images/Blue_Marble300x300.ppm");
@@ -83,7 +79,7 @@ TEST_CASE("Black and White Image Max Color Value", "[Max Color Value]") {
   REQUIRE(rle.GetMaxColorValue() == 255);
 }
 
-TEST_CASE("All Images Max Color Vlaue", "[Max Color Value All]") {
+TEST_CASE("All Images Max Color Vlaue", "[Max Color Value]") {
   RLEImagePPM rle_1("images/BlackWhiteAlternating10X5.ppm");
   RLEImagePPM rle_2("images/AlternatingColors35x25.ppm");
   RLEImagePPM rle_3("images/Blue_Marble300x300.ppm");
@@ -95,7 +91,31 @@ TEST_CASE("All Images Max Color Vlaue", "[Max Color Value All]") {
   REQUIRE(rle_4.GetMaxColorValue() == 65535);
 }
 
-TEST_CASE("Do nothing", "[Do nothing]") {
-  REQUIRE(CompareFiles("images/BlackWhiteAlternating10X5.ppm",
-                       "images/BlackWhiteAlternating10X5.ppm"));
+TEST_CASE("Test toPPM", "[PPM]") {
+  std::string input = "images/AlternatingColors35x25.ppm";
+  std::string output = "images/output/AlternatingColors35x25.ppm";
+  std::string truth = "images/AlternatingColors35x25.ppm";
+  RLEImagePPM rle(input);
+  rle.ToPPM(output);
+  REQUIRE(CompareFiles(output, truth));
+}
+
+TEST_CASE("Test Flip Vertical", "[Rotations]") {
+  std::string input = "images/CS128Logo400x308.ppm";
+  std::string output = "images/output/CS128Logo400x308FlipVertical.ppm";
+  std::string truth = "images/CS128Logo400x308FlipVertical.ppm";
+  RLEImagePPM rle(input);
+  rle.FlipVertical();
+  rle.ToPPM(output);
+  REQUIRE(CompareFiles(output, truth));
+}
+
+TEST_CASE("Test Flip Horizontal", "[Rotations]") {
+  std::string input = "images/AlternatingColors35x25.ppm";
+  std::string output = "images/output/AlternatingColors35x25FlipHorizontal.ppm";
+  std::string truth = "images/AlternatingColors35x25FlipHorizontal.ppm";
+  RLEImagePPM rle(input);
+  rle.FlipHorizontal();
+  rle.ToPPM(output);
+  REQUIRE(CompareFiles(output, truth));
 }

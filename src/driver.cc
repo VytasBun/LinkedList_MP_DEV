@@ -13,16 +13,17 @@ int char_count(const std::string& file_name) {
   return ans;
 }
 int main() {
-  RLEImagePPM rle("images/CS128Logo400x308.ppm");
+  RLEImagePPM rle("images/output/AlternatingColors35x25.ppm");
   // rle.CropRight(50);
   //  rle.FlipHorizontal();
-  rle.FlipVertical();
+  rle.FlipHorizontal();
   // rle.ToPPM("output.ppm");
   rle.ToCSV("out.csv");
-  rle.ToPPM("output_right.ppm");
+  rle.ToPPM("images/AlternatingColors35x25FlipHorizontal.ppm");
   RLEImagePPM rle2("out.csv", 400, 308, 65535);
   rle2.ToPPM("output.ppm");
 
-  std::cout << "Char Count for PPM: " << char_count("output.ppm") << std::endl;
-  std::cout << "Char Count for CSV: " << char_count("out.csv") << std::endl;
+  // std::cout << "Char Count for PPM: " << char_count("output.ppm") <<
+  // std::endl; std::cout << "Char Count for CSV: " << char_count("out.csv") <<
+  // std::endl;
 }

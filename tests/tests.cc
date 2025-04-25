@@ -27,8 +27,75 @@
 //                             Helpers/Constants //
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+bool CompareFiles(const std::string& file_1, const std::string& file_2) {
+  std::ifstream f1(file_1);
+  std::ifstream f2(file_2);
+
+  if (!f1.is_open() || !f2.is_open()) {
+    return false;
+  }
+
+  std::string f1_line;
+  std::string f2_line;
+
+  while (f1.good() && f2.good()) {
+    f1 >> f1_line;
+    f2 >> f2_line;
+    if (f1_line != f2_line) {
+      return false;
+    }
+  }
+
+  if (f1.good() || f2.good()) {
+    return false;
+  }
+
+  return true;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 //                                Test Cases //
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-TEST_CASE("Sample Test Case", "") { REQUIRE(true == true); }
+TEST_CASE("Black and White Image Height and Width", "[Height and Width]") {
+  RLEImagePPM rle("images/BlackWhiteAlternating10X5.ppm");
+  REQUIRE(rle.GetHeight() == 5);
+  REQUIRE(rle.GetWidth() == 10);
+}
+
+TEST_CASE("All Images Height and Width", "[Height and Width All]") {
+  RLEImagePPM rle_1("images/BlackWhiteAlternating10X5.ppm");
+  RLEImagePPM rle_2("images/AlternatingColors35x25.ppm");
+  RLEImagePPM rle_3("images/Blue_Marble300x300.ppm");
+  RLEImagePPM rle_4("images/CS128Logo400x308.ppm");
+  REQUIRE(rle_1.GetHeight() == 5);
+  REQUIRE(rle_1.GetWidth() == 10);
+  REQUIRE(rle_2.GetHeight() == 25);
+  REQUIRE(rle_2.GetWidth() == 35);
+  REQUIRE(rle_3.GetHeight() == 300);
+  REQUIRE(rle_3.GetWidth() == 300);
+  REQUIRE(rle_4.GetHeight() == 308);
+  REQUIRE(rle_4.GetWidth() == 400);
+}
+
+TEST_CASE("Black and White Image Max Color Value", "[Max Color Value]") {
+  RLEImagePPM rle("images/BlackWhiteAlternating10X5.ppm");
+  REQUIRE(rle.GetMaxColorValue() == 255);
+}
+
+TEST_CASE("All Images Max Color Vlaue", "[Max Color Value All]") {
+  RLEImagePPM rle_1("images/BlackWhiteAlternating10X5.ppm");
+  RLEImagePPM rle_2("images/AlternatingColors35x25.ppm");
+  RLEImagePPM rle_3("images/Blue_Marble300x300.ppm");
+  RLEImagePPM rle_4("images/CS128Logo400x308.ppm");
+  REQUIRE(rle_1.GetMaxColorValue() == 255);
+  REQUIRE(rle_2.GetMaxColorValue() == 255);
+  REQUIRE(rle_3.GetMaxColorValue() == 255);
+  // Hex for (0xffff)
+  REQUIRE(rle_4.GetMaxColorValue() == 65535);
+}
+
+TEST_CASE("Do nothing", "[Do nothing]") {
+  REQUIRE(CompareFiles("images/BlackWhiteAlternating10X5.ppm",
+                       "images/BlackWhiteAlternating10X5.ppm"));
+}

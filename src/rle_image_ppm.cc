@@ -105,8 +105,6 @@ void RLEImagePPM::ToPPM(const std::string& filename) const {
 }
 void RLEImagePPM::ToCSV(const std::string& filename) const {
   std::ofstream ofs{filename};
-  ofs << "P3" << std::endl;
-  ofs << width_ << " " << height_ << std::endl;
   for (unsigned int r = 0; r < height_; r++) {
     Node* curr = image_[r];
     while (curr != nullptr) {

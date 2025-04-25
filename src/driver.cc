@@ -8,5 +8,8 @@ int main() {
   // rle.CropRight(50);
   //  rle.FlipHorizontal();
   rle.FlipVertical();
-  rle.ToPPM("output.ppm");
+  // rle.ToPPM("output.ppm");
+  rle.ToCSV("out.csv");
+  RLEImagePPM rle2("out.csv", 400, 308, 65535);
+  rle2.ToPPM("output.ppm");
 }

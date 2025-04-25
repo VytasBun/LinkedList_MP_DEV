@@ -4,7 +4,7 @@
 
 struct Node {
   Pixel pixel_;
-  unsigned int count_ = 0;
+  unsigned int count_ = 1;
   Node* next_ = nullptr;  // NOLINT
   Node(Pixel pixel): pixel_(pixel) {}
   Node(Pixel pixel, unsigned int count): pixel_(pixel), count_(count) {}

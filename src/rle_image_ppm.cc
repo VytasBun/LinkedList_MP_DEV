@@ -61,7 +61,8 @@ RLEImagePPM::RLEImagePPM(const std::string& filename,
       char throw_away;
       int r, g, b;
       unsigned int c;
-      ifs >> throw_away >> r >> g >> b >> throw_away >> c >> throw_away;
+      ifs >> throw_away >> r >> g >> b >> throw_away >> throw_away >> c >>
+          throw_away;
       Pixel p(r, g, b);
       Node* n = new Node(p, c);
       if (count == static_cast<int>(width_)) {
